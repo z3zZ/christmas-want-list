@@ -79,6 +79,24 @@ h2{font:700 clamp(26px,3.2vw,36px)/1.08 "Inter Tight",Inter,sans-serif;margin:2p
 .links a::after{content:"";width:7px;height:7px;border-top:1.5px solid currentColor;border-right:1.5px solid currentColor;transform:rotate(45deg) translate(-1px,1px)}
 .dream .card{background:linear-gradient(150deg,rgba(255,66,88,.16),rgba(255,255,255,.05))}
 .cant .card{background:linear-gradient(150deg,rgba(63,207,134,.13),rgba(255,255,255,.04))}
+/* highlighted picks + cash */
+.card{position:relative;overflow:hidden}
+.card.hl{border-color:transparent;background:linear-gradient(150deg,rgba(255,211,138,.14),rgba(255,66,88,.1))}
+.card.hl::before{content:"";position:absolute;inset:-60%;z-index:-1;background:conic-gradient(from 0deg,transparent 0 55%,var(--gold) 70%,var(--red) 80%,transparent 92%);animation:spin 4s linear infinite}
+.card.hl::after{content:"";position:absolute;inset:1.5px;z-index:-1;border-radius:21px;background:#11141f}
+.card.hl{isolation:isolate;animation:lift 3.2s ease-in-out infinite}
+.pick{align-self:flex-start;font-size:12px;font-weight:700;padding:3px 10px;border-radius:999px;background:linear-gradient(90deg,var(--gold),var(--red));color:#160a0c}
+@keyframes spin{to{transform:rotate(1turn)}}
+@keyframes lift{50%{transform:translateY(-4px)}}
+.card.cash{isolation:isolate;border-color:rgba(63,207,134,.5);background:linear-gradient(150deg,rgba(63,207,134,.2),rgba(255,211,138,.08))}
+.bills{position:absolute;inset:0;z-index:-1;pointer-events:none}
+.bills i{position:absolute;bottom:-30px;font:800 22px "Inter Tight",sans-serif;font-style:normal;color:var(--pine);opacity:0;animation:rise 4.2s linear infinite}
+.bills i:nth-child(1){left:8%;animation-delay:0s}.bills i:nth-child(2){left:22%;animation-delay:1.1s;font-size:16px}
+.bills i:nth-child(3){left:38%;animation-delay:2.3s;color:var(--gold)}.bills i:nth-child(4){left:55%;animation-delay:.6s;font-size:28px}
+.bills i:nth-child(5){left:70%;animation-delay:1.8s;color:var(--gold);font-size:18px}.bills i:nth-child(6){left:84%;animation-delay:3s}
+.bills i:nth-child(7){left:93%;animation-delay:.3s;font-size:15px}
+@keyframes rise{0%{transform:translateY(0) rotate(-10deg);opacity:0}15%{opacity:.75}100%{transform:translateY(-190px) rotate(18deg);opacity:0}}
+@media(prefers-reduced-motion:reduce){.card.hl,.card.hl::before,.bills i{animation:none}.bills{display:none}}
 /* notes + banner */
 .notes{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,260px),1fr));gap:12px;margin-bottom:12px}
 .notes .glass{padding:20px}
@@ -246,11 +264,12 @@ const tiers=[
   ['Grey paint for my room','One specific grey.',[],'ask']]},
  {id:'solid',lvl:'Level 2',name:'Solid gift',desc:'The proper present tier.',items:[
   ['Nike Air Max 270','UK 13. All black preferred, other colourways are fine too.',[['All black, Nike','https://www.nike.com/gb/t/air-max-270-shoes-KdcVMZ/AH8050-005']]],
-  ['New Xbox controller','Black, ideally.',[['Xbox','https://www.xbox.com/en-GB/accessories/controllers/xbox-wireless-controller']]],
-  ['Fancy pens I can actually use','Nice to write with, not display pieces.',[['Lamy 2000','https://www.lamy.com/en-gb/p/lamy-2000-fountain-pen']]],
+  ['DerSchutze dragon windbreaker','The dragon one, in black. Size XL.',[['DerSchutze','https://derschutze.com/products/dragon-windbreaker-black']]],
+  ['Black cashmere scarf','Any plain black cashmere one.',[['COS','https://www.cos.com/en-gb/men/accessories/hatsscarvesgloves/scarves/cashmere/product/pure-cashmere-scarf-black-1032425001'],['Cordings','https://www.cordings.co.uk/black-speyside-cashmere-scarf.html'],['Feeling baller','https://www.harrods.com/en-gb/p/burberry-cashmere-wide-check-scarf-000000000007902163']]],
+  ['New Xbox controller','White, or a custom anime one.',[['White','https://www.xbox.com/en-GB/accessories/controllers/xbox-wireless-controller'],['Design your own','https://xboxdesignlab.xbox.com/en-gb/controllers/xbox-wireless-controller']]],
+  ['A nice pen','Writes well and looks luxury, without the silly price.',[['rOtring 600','https://www.goldspot.com/products/rotring-600-series-black-ballpoint-pen']]],
+  ['Wide-angle action camera','For vlogging, and it doubles as a USB webcam so I can use it for rewnd timelapses.',[['DJI Osmo Action 4','https://www.very.co.uk/browse/technology-action-cams/brand--dji']]],
   ['Anime figures','For the collection I\'m planning. Series I like only.',[],'ask'],
-  ['Claude Max subscription','For the side projects.',[['Claude Max','https://claude.com/pricing/max']]],
-  ['Mandarin tuition','Something manageable around work and the degree.',[['italki','https://www.italki.com/']]],
   ['TV wall mount','For a 48" OLED. This one swivels and fits it.',[['Vogel\'s TVM 3465','https://www.richersounds.com/vogels-tvm-3465-black.html']]],
   ['Bed frame','Black, and long enough for someone who\'s 6\'4". Can come later.',[],'ask']]},
  {id:'events',lvl:'Level 2.5',name:'Tickets',desc:'Tech expos and career events I could actually get to.',items:[
@@ -260,18 +279,18 @@ const tiers=[
   ['Tech Show London','10–11 March 2027, ExCeL.',[['Site','https://techshowlondon.co.uk']]],
   ['QCon London 2027','Software engineering conference. This one costs proper money.',[['Site','https://qconlondon.com/']]],
   ['London Tech Week','7–11 June 2027, Olympia. A Premium Pass would be huge.',[['Site','https://londontechweek.com/']]]]},
- {id:'chip',lvl:'Level 3',name:'Chip in',desc:'Big ticket or luxury. Contributions are very welcome.',items:[
-  ['AI robot pet','I would genuinely love one of these. Vector 2.0 (the little desk robot) or AIBI (the pocket one).',[['Vector 2.0','https://uk.robotshop.com/products/vector-20-ai-robot-companion'],['AIBI','https://www.living.ai']]],
+ {id:'chip',lvl:'Level 3',name:'Chip in',desc:'Big ticket. Go halves with someone, or put money towards it.',items:[
+  ['AI robot pet','I would genuinely love one of these. Vector 2.0 (the little desk robot) or AIBI (the pocket one).',[['Vector 2.0','https://uk.robotshop.com/products/vector-20-ai-robot-companion'],['AIBI','https://www.living.ai']],'','hl'],
+  ['PC parts','I\'m building a new PC. Send money towards it.',[],'','hl'],
+  ['China trip','Contributions or anything prepaid for the Shenzhen trip.',[],'','hl'],
+  ['Money, or stocks','Straight into investing. Boring, but it compounds.',[],'','cash'],
   ['Smart glasses with a display','The kind with a screen in the lens and live translation, no camera. Not Meta, and not a VR headset.',[['Even Realities G2','https://www.evenrealities.com/translation-glasses']]],
-  ['Vlogging camera','Something that also works as a USB webcam.',[['DJI Osmo Pocket 4','https://store.dji.com/uk/product/osmo-pocket-4?set_region=GB']]],
-  ['Acne Studios','Anything black, size XL. Like this hoodie.',[['Logo hoodie','https://www.mytheresa.com/gb/en/men/acne-studios-logo-cotton-blend-hoodie-black-p00830989']]],
-  ['Burberry black scarf','Plain black cashmere, or the black check.',[['Plain black','https://italist.com/products/burberry-scarfs-black-cashmere'],['Black check','https://www.harrods.com/en-gb/p/burberry-cashmere-wide-check-scarf-000000000007902163']]],
+  ['Claude Max subscription','For the side projects.',[['Claude Max','https://claude.com/pricing/max']]],
+  ['Mandarin tuition','Something manageable around work and the degree.',[['italki','https://www.italki.com/']]],
+  ['Acne Studios','Anything black, size XL.',[['Zip hoodie, Mr Porter','https://www.mrporter.com/en-gb/mens/product/acne-studios/clothing/zip-through/fupiter-logo-appliqued-cotton-jersey-zip-up-hoodie/1647597346626982'],['Logo hoodie, Selfridges','https://www.selfridges.com/GB/en/product/acne-studios-franziska-1996-cotton-blend-hoodie_R04580903/']]],
   ['G&G GR4 G26 Black Rose AEG','Airsoft rifle. Seriously cool one.',[['Patrol Base','https://www.patrolbase.co.uk/g-and-g-armament-gr4-g26-combat-machine-aeg-blowback-black-rose']]],
-  ['iPhone 18 Pro Max','Black, for the size.',[['Apple','https://www.apple.com/uk/iphone/']]],
-  ['PC parts','I\'m building a new PC. Just send money towards it.',[]],
-  ['China trip','Contributions or anything prepaid for the Shenzhen trip.',[]],
-  ['Money, or stocks','Straight into investing. Boring, but it compounds.',[]]]},
- {id:'dream',lvl:'Level 4',name:'The dream',desc:'Not expecting these under the tree. Yet.',items:[
+  ['iPhone 18 Pro Max','Black, for the size.',[['Apple','https://www.apple.com/uk/iphone/']]]]},
+ {id:'dream',lvl:'Level 4',name:'The day 1',desc:'Day one of having made it. Not expecting these under the tree. Yet.',items:[
   ['2014 Lamborghini Huracán','In black. THE dream.',[['Black Huracáns for sale','https://www.autotrader.co.uk/cars/used/lamborghini/huracan/black'],['Photos','https://www.google.com/search?tbm=isch&q=black+2014+lamborghini+huracan+lp610-4']]],
   ['Liberty Walk kit','For the Huracán. In black, or black and white.',[['LB-Works kit','https://bulletproofautomotive.com/?p=217312'],['Photos','https://www.speedhunters.com/?p=505868'],['Black LB images','https://www.google.com/search?tbm=isch&q=black+liberty+walk+huracan']]],
   ['Richard Mille RM 47 Tourbillon','The samurai one. Hand-engraved armour inside the case, 75 made.',[['Richard Mille','https://richardmille.com/collections/rm-47-tourbillon'],['Closer look','https://hypebeast.com/2022/4/richard-mille-bushido-code-47-ronin-rm-47-tourbillon']]],
@@ -288,7 +307,7 @@ let cur='all';
 const tagLabel={ask:'Ask me',gifted:'Gifted',earned:'Earned'};
 const renderTabs=()=>{tabsEl.innerHTML=[['all','Everything'],...tiers.map(t=>[t.id,t.name])].map(([id,n])=>
  `<button type="button" data-id="${id}" aria-pressed="${cur===id}">${esc(n)}</button>`).join('')};
-const card=([n,d,links,tag])=>`<article class="card glass">
+const card=([n,d,links,tag,fx])=>`<article class="card glass${fx?' '+fx:''}">${fx==='hl'?'<span class="pick">Top pick</span>':''}${fx==='cash'?'<span class="bills" aria-hidden="true">'+'<i>£</i>'.repeat(7)+'</span>':''}
  <h3><span>${esc(n)}</span>${tag?`<span class="tag ${tag}">${tagLabel[tag]}</span>`:''}</h3>
  <p>${esc(d)}</p>
  ${links.length?`<div class="links">${links.map(([l,u])=>`<a href="${esc(u)}" target="_blank" rel="noopener">${esc(l)}</a>`).join('')}</div>`:''}
@@ -305,7 +324,6 @@ renderTabs();renderList();
 }
 </script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/controls/OrbitControls.js"></script>
 <script>
 {
 // The bedroom render (z3zZ/bedroom-render), dressed for Christmas. Room units are cm.
@@ -418,12 +436,15 @@ try{
  // camera: from the door end, looking across to the bay, tree and desk
  const P=(x,y,z)=>new THREE.Vector3(x-W/2,y,z-D/2);
  cam.position.copy(P(345,180,70));
- let ctr=null;const target=P(55,105,215);cam.lookAt(target);
- const fine=matchMedia('(pointer:fine)').matches,reduce=matchMedia('(prefers-reduced-motion: reduce)').matches;
- if(fine&&THREE.OrbitControls){ctr=new THREE.OrbitControls(cam,renderer.domElement);ctr.target.copy(target);ctr.enableZoom=false;ctr.enablePan=false;ctr.enableDamping=true;
-  ctr.minAzimuthAngle=ctr.getAzimuthalAngle()-.55;ctr.maxAzimuthAngle=ctr.getAzimuthalAngle()+.35;ctr.minPolarAngle=.9;ctr.maxPolarAngle=1.55;ctr.update();
-  host.classList.add('drag')}
- const base=cam.position.clone();
+ const target=P(55,105,215),eye=cam.position.clone();
+ const d0=target.clone().sub(eye).normalize(),yaw0=Math.atan2(d0.x,d0.z),pitch0=Math.asin(d0.y);
+ let yaw=0,pitch=0,tyaw=0,tpitch=0,drag=null;const YAW=.55,PITCH=.22;
+ const reduce=matchMedia('(prefers-reduced-motion: reduce)').matches;
+ const cv=renderer.domElement;cv.style.touchAction='pan-y';host.classList.add('drag');
+ cv.addEventListener('pointerdown',e=>{drag={x:e.clientX,y:e.clientY,yaw:tyaw,pitch:tpitch};cv.setPointerCapture(e.pointerId)});
+ cv.addEventListener('pointermove',e=>{if(!drag)return;const k=2.2/Math.max(host.clientWidth,300);
+  tyaw=Math.max(-YAW,Math.min(YAW,drag.yaw+(e.clientX-drag.x)*k*1.4));tpitch=Math.max(-PITCH,Math.min(PITCH,drag.pitch+(e.clientY-drag.y)*k))});
+ const up=()=>{drag=null};cv.addEventListener('pointerup',up);cv.addEventListener('pointercancel',up);
  const size=()=>{const w=host.clientWidth,h=host.clientHeight;if(!w||!h)return;renderer.setSize(w,h);cam.aspect=w/h;cam.fov=cam.aspect<1.5?70:56;if(innerWidth>1100)cam.setViewOffset(w,h,-w*.2,0,w,h);else cam.clearViewOffset();cam.updateProjectionMatrix()};
  const ro=new ResizeObserver(size);ro.observe(host);size();
  let visible=true;const io=new IntersectionObserver(e=>{visible=e[0].isIntersecting});io.observe(host);
@@ -431,8 +452,11 @@ try{
  (function loop(){requestAnimationFrame(loop);if(!visible)return;const t=clock.getElapsedTime();
   if(!reduce){const p=sg.attributes.position.array;for(let i=0;i<N;i++){p[i*3+1]-=.35+(i%5)*.06;if(p[i*3+1]<0)p[i*3+1]=320}sg.attributes.position.needsUpdate=true;
    bulbs.forEach((m,i)=>m.visible=Math.sin(t*2+i*1.7)>-.6);tl1.intensity=1.2+Math.sin(t*1.5)*.2;
-   if(!ctr){cam.position.set(base.x+Math.sin(t*.25)*14,base.y+Math.sin(t*.18)*4,base.z);cam.lookAt(target)}}
-  if(ctr)ctr.update();renderer.render(scene,cam)})();
+  }
+  const idle=drag||reduce?0:Math.sin(t*.2)*.06;yaw+=(tyaw+idle-yaw)*.08;pitch+=(tpitch-pitch)*.08;
+  const Y=yaw0+yaw,Pt=pitch0+pitch;cam.position.copy(eye);
+  cam.lookAt(eye.x+Math.sin(Y)*Math.cos(Pt),eye.y+Math.sin(Pt),eye.z+Math.cos(Y)*Math.cos(Pt));
+  renderer.render(scene,cam)})();
  host.classList.add('ready');
 }catch(e){host.remove()}
 }
