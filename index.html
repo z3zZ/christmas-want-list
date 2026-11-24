@@ -1,0 +1,304 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Joshan's Wish List</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@600;700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+/*
+VOICE: dry and self-aware, a wish list that's half a joke and half a goals board
+IDEA: a frosted window on a snowy Christmas night, everything behind glass like an Apple panel
+PICTURE: illustrated bedroom at night: bay window with snowy skyline, lit tree and presents, me at the desk
+COLOUR and TYPE: deep night ground, warm tree-light gold, Christmas red accent, pine green; Inter Tight + Inter
+LAYOUT: scene hero with glass title panel, glass segmented tabs, glass card grid, glass notes, closing banner
+*/
+:root{color-scheme:dark;--bg:#070a14;--ink:#f5f3ef;--mute:rgba(245,243,239,.66);--red:#ff4258;--gold:#ffd38a;--pine:#3fcf86;
+ --glass:rgba(255,255,255,.075);--glass2:rgba(255,255,255,.12);--edge:rgba(255,255,255,.16)}
+*{box-sizing:border-box;min-width:0}
+html{scroll-padding-top:80px}
+body{margin:0;color:var(--ink);font:16px/1.55 Inter,system-ui,-apple-system,sans-serif;overflow-x:clip;background:var(--bg)}
+body::before{content:"";position:fixed;inset:-20vmax;z-index:-1;background:
+ radial-gradient(40vmax 30vmax at 15% 20%,rgba(255,66,88,.28),transparent 60%),
+ radial-gradient(35vmax 30vmax at 85% 30%,rgba(63,207,134,.18),transparent 60%),
+ radial-gradient(45vmax 35vmax at 60% 90%,rgba(255,211,138,.16),transparent 60%),var(--bg)}
+a{color:inherit}
+.wrap{max-width:1180px;margin:0 auto;padding:0 max(4vw,14px)}
+.glass{background:var(--glass);border:1px solid var(--edge);border-radius:24px;
+ -webkit-backdrop-filter:blur(22px) saturate(170%);backdrop-filter:blur(22px) saturate(170%);
+ box-shadow:inset 0 1px 0 rgba(255,255,255,.22),0 20px 50px -20px rgba(0,0,0,.6)}
+/* hero */
+.hero{position:relative;padding-top:clamp(12px,2vw,24px)}
+.scene{position:relative;border-radius:30px;overflow:hidden;aspect-ratio:16/8.2;min-height:300px;border:1px solid var(--edge)}
+.scene svg{position:absolute;inset:0;width:100%;height:100%}
+.title{position:absolute;left:calc(max(4vw,14px) + clamp(14px,3vw,36px));bottom:clamp(14px,3vw,36px);max-width:min(440px,40%);padding:clamp(18px,2.4vw,30px)}
+h1{font:800 clamp(30px,4.6vw,52px)/1.04 "Inter Tight",Inter,sans-serif;margin:0 0 12px;text-wrap:balance;letter-spacing:-.02em}
+.title p{margin:0 0 10px;color:rgba(245,243,239,.86)}
+.motto{font-weight:600;color:var(--gold)!important;margin:6px 0 0!important}
+.stats{display:flex;gap:10px;flex-wrap:wrap;margin-top:14px}
+.stat{padding:8px 14px;border-radius:999px;background:var(--glass2);border:1px solid var(--edge);font-size:14px;white-space:nowrap}
+.stat b{font-weight:700}
+@media(max-width:1100px){
+ .scene{aspect-ratio:auto;height:clamp(280px,42vw,430px);border-radius:26px}
+ .title{position:relative;left:auto;bottom:auto;max-width:720px;margin:-48px auto 0;width:calc(100% - 24px);z-index:2}}
+@media(max-width:600px){
+ .scene{height:290px;border-radius:24px}
+ .scene svg{width:calc(100% + 170px);height:100%;left:-170px;right:auto}
+ .title{margin-top:-40px;width:calc(100% - 16px)}}
+/* tabs */
+.tabs{position:sticky;top:10px;z-index:10;margin:22px auto 6px;width:max-content;max-width:calc(100% - 28px);padding:5px;border-radius:999px}
+.tabs .row{display:flex;gap:4px;overflow-x:auto;scrollbar-width:none;scroll-snap-type:x proximity}
+.tabs .row::-webkit-scrollbar{display:none}
+.tabs button{flex:none;scroll-snap-align:start;min-height:42px;padding:0 16px;border:0;border-radius:999px;background:transparent;color:var(--mute);font:500 15px Inter,sans-serif;cursor:pointer;transition:background .2s,color .2s}
+.tabs button[aria-pressed=true]{background:rgba(255,255,255,.9);color:#0b0e18}
+button:focus-visible,a:focus-visible{outline:2px solid var(--gold);outline-offset:2px}
+/* tiers */
+main{padding-top:18px}
+.tier{margin:0 0 clamp(34px,5vw,56px)}
+.tier header{display:flex;flex-wrap:wrap;align-items:end;justify-content:space-between;gap:4px 18px;margin:0 4px 14px}
+.lvl{margin:0;font-size:14px;font-weight:600;color:var(--gold)}
+h2{font:700 clamp(26px,3.2vw,36px)/1.08 "Inter Tight",Inter,sans-serif;margin:2px 0 0;letter-spacing:-.015em}
+.tier header p.d{margin:0;color:var(--mute);max-width:52ch}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(min(100%,270px),1fr));gap:12px}
+.card{padding:18px 18px 16px;border-radius:22px;display:flex;flex-direction:column;gap:8px;transition:transform .25s ease,background .25s}
+@media(hover:hover){.card:hover{transform:translateY(-3px);background:rgba(255,255,255,.1)}}
+.card h3{margin:0;font:600 17px/1.3 Inter,sans-serif;display:flex;gap:8px;align-items:baseline;justify-content:space-between}
+.card p{margin:0;color:var(--mute);font-size:15px}
+.tag{flex:none;font-size:12.5px;font-weight:600;padding:2px 9px;border-radius:999px;border:1px solid var(--edge);color:var(--mute);white-space:nowrap}
+.tag.ask{color:var(--gold);border-color:rgba(255,211,138,.4)}
+.tag.gifted{color:var(--red);border-color:rgba(255,66,88,.5)}
+.tag.earned{background:var(--pine);color:#05140c;border-color:var(--pine)}
+.links{display:flex;flex-wrap:wrap;gap:6px;margin-top:auto;padding-top:4px}
+.links a{display:inline-flex;align-items:center;gap:6px;min-height:36px;padding:0 13px;border-radius:999px;background:var(--glass2);border:1px solid var(--edge);text-decoration:none;font-size:14px;font-weight:500}
+.links a:hover{background:rgba(255,255,255,.2)}
+.links a::after{content:"";width:7px;height:7px;border-top:1.5px solid currentColor;border-right:1.5px solid currentColor;transform:rotate(45deg) translate(-1px,1px)}
+.dream .card{background:linear-gradient(150deg,rgba(255,66,88,.16),rgba(255,255,255,.05))}
+.cant .card{background:linear-gradient(150deg,rgba(63,207,134,.13),rgba(255,255,255,.04))}
+/* notes + banner */
+.notes{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,260px),1fr));gap:12px;margin-bottom:12px}
+.notes .glass{padding:20px}
+.notes h3{margin:0 0 6px;font:700 19px "Inter Tight",sans-serif}
+.notes p{margin:0;color:rgba(245,243,239,.82);font-size:15px}
+.banner{padding:clamp(24px,4vw,44px);text-align:center;margin:12px 0 18px}
+.banner p{margin:0;color:var(--mute)}
+.banner h2{font-size:clamp(28px,4.2vw,46px);margin:6px 0 8px}
+footer{color:var(--mute);font-size:14px;text-align:center;padding:6px 0 36px}
+.snow circle{animation:fall linear infinite}
+@keyframes fall{from{transform:translateY(-20px)}to{transform:translateY(420px)}}
+.twinkle{animation:tw 2.4s ease-in-out infinite alternate}
+@keyframes tw{from{opacity:.45}to{opacity:1}}
+@media(prefers-reduced-motion:reduce){.snow circle,.twinkle{animation:none}.card{transition:none}}
+</style>
+</head>
+<body>
+<div class="wrap hero">
+ <div class="scene" role="img" aria-label="Illustration of my room on a snowy Christmas night: a bay window over a city skyline, a lit tree with presents, and me at my desk">
+  <svg viewBox="0 0 1600 820" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
+   <defs>
+    <linearGradient id="wall" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#151a2b"/><stop offset="1" stop-color="#0c0f1a"/></linearGradient>
+    <linearGradient id="sky" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#0d1838"/><stop offset="1" stop-color="#2a2550"/></linearGradient>
+    <radialGradient id="treeglow" cx=".5" cy=".6" r=".5"><stop offset="0" stop-color="#ffd38a" stop-opacity=".45"/><stop offset="1" stop-color="#ffd38a" stop-opacity="0"/></radialGradient>
+    <radialGradient id="monglow" cx=".5" cy=".5" r=".5"><stop offset="0" stop-color="#7fb4ff" stop-opacity=".45"/><stop offset="1" stop-color="#7fb4ff" stop-opacity="0"/></radialGradient>
+    <clipPath id="win"><path d="M560 120 h520 v380 h-520z"/></clipPath>
+   </defs>
+   <rect width="1600" height="820" fill="url(#wall)"/>
+   <!-- floor -->
+   <path d="M0 640 H1600 V820 H0z" fill="#0a0c15"/>
+   <path d="M0 640 H1600" stroke="rgba(255,255,255,.06)" stroke-width="2"/>
+   <!-- rug -->
+   <ellipse cx="820" cy="730" rx="420" ry="55" fill="#05060b" opacity=".8"/>
+   <!-- bay window -->
+   <g clip-path="url(#win)">
+    <rect x="560" y="120" width="520" height="380" fill="url(#sky)"/>
+    <g fill="#1a1f3d">
+     <rect x="580" y="330" width="60" height="170"/><rect x="650" y="270" width="50" height="230"/><rect x="710" y="300" width="70" height="200"/>
+     <path d="M800 500 V220 l35 -40 35 40 V500z"/><rect x="890" y="260" width="55" height="240"/><rect x="955" y="310" width="60" height="190"/><rect x="1025" y="350" width="50" height="150"/>
+    </g>
+    <g fill="#ffd38a" opacity=".7">
+     <rect x="662" y="290" width="6" height="8"/><rect x="680" y="320" width="6" height="8"/><rect x="725" y="320" width="6" height="8"/><rect x="760" y="350" width="6" height="8"/>
+     <rect x="815" y="250" width="6" height="8"/><rect x="845" y="290" width="6" height="8"/><rect x="830" y="340" width="6" height="8"/><rect x="905" y="280" width="6" height="8"/>
+     <rect x="925" y="330" width="6" height="8"/><rect x="970" y="330" width="6" height="8"/><rect x="995" y="370" width="6" height="8"/><rect x="1040" y="380" width="6" height="8"/>
+    </g>
+    <circle cx="990" cy="175" r="22" fill="#f5f0e0" opacity=".9"/>
+    <g class="snow" fill="#fff">
+     <circle cx="590" cy="130" r="2.5" style="animation-duration:7s"/><circle cx="640" cy="150" r="2" style="animation-duration:9s;animation-delay:-3s"/>
+     <circle cx="700" cy="120" r="3" style="animation-duration:8s;animation-delay:-5s"/><circle cx="760" cy="140" r="2" style="animation-duration:10s;animation-delay:-2s"/>
+     <circle cx="830" cy="125" r="2.5" style="animation-duration:7.5s;animation-delay:-6s"/><circle cx="880" cy="135" r="2" style="animation-duration:9.5s;animation-delay:-1s"/>
+     <circle cx="940" cy="120" r="3" style="animation-duration:8.5s;animation-delay:-4s"/><circle cx="1010" cy="140" r="2" style="animation-duration:10.5s;animation-delay:-7s"/>
+     <circle cx="1060" cy="128" r="2.5" style="animation-duration:7s;animation-delay:-2.5s"/><circle cx="615" cy="135" r="1.8" style="animation-duration:11s;animation-delay:-8s"/>
+    </g>
+    <path d="M560 470 Q700 450 820 470 T1080 465 V500 H560z" fill="#e8ecf5" opacity=".85"/>
+   </g>
+   <!-- window frame: 5 panels -->
+   <g fill="none" stroke="#2a3048" stroke-width="10">
+    <rect x="560" y="120" width="520" height="380" rx="4"/>
+    <path d="M664 120 V500 M768 120 V500 M872 120 V500 M976 120 V500 M560 230 H1080"/>
+   </g>
+   <rect x="540" y="500" width="560" height="22" rx="4" fill="#232842"/>
+   <!-- curtains -->
+   <path d="M500 100 Q530 300 510 560 L560 560 Q545 300 560 100z" fill="#1b1f33"/>
+   <path d="M1140 100 Q1110 300 1130 560 L1080 560 Q1095 300 1080 100z" fill="#1b1f33"/>
+   <!-- shelf wall left with figures -->
+   <g>
+    <rect x="70" y="150" width="330" height="490" rx="6" fill="#0d101c" stroke="#1d2236" stroke-width="3"/>
+    <g stroke="#1d2236" stroke-width="3"><path d="M70 270 H400 M70 390 H400 M70 510 H400"/></g>
+    <g fill="#ffd38a" opacity=".28"><rect x="74" y="266" width="322" height="4"/><rect x="74" y="386" width="322" height="4"/><rect x="74" y="506" width="322" height="4"/></g>
+    <g fill="#262c46">
+     <rect x="100" y="205" width="26" height="62" rx="8"/><rect x="150" y="215" width="22" height="52" rx="7"/><rect x="200" y="200" width="30" height="67" rx="9"/><path d="M270 267 l18 -60 18 60z"/><rect x="330" y="212" width="24" height="55" rx="7"/>
+     <rect x="96" y="340" width="18" height="47"/><rect x="116" y="345" width="18" height="42"/><rect x="136" y="338" width="18" height="49"/><rect x="156" y="342" width="18" height="45"/><rect x="176" y="336" width="18" height="51"/>
+     <rect x="230" y="325" width="28" height="62" rx="9"/><rect x="290" y="333" width="24" height="54" rx="8"/><rect x="340" y="320" width="30" height="67" rx="9"/>
+     <rect x="110" y="450" width="28" height="57" rx="8"/><rect x="180" y="440" width="34" height="67" rx="10"/><rect x="260" y="455" width="24" height="52" rx="7"/><rect x="320" y="445" width="30" height="62" rx="9"/>
+    </g>
+    <rect x="120" y="560" width="230" height="70" rx="6" fill="#111526"/>
+   </g>
+   <!-- tree -->
+   <ellipse cx="1290" cy="420" rx="230" ry="260" fill="url(#treeglow)"/>
+   <g>
+    <path d="M1290 170 L1380 330 H1200z" fill="#164d34"/>
+    <path d="M1290 240 L1410 440 H1170z" fill="#1a5c3e"/>
+    <path d="M1290 330 L1440 560 H1140z" fill="#1f6b47"/>
+    <rect x="1275" y="560" width="30" height="40" fill="#3a2618"/>
+    <path d="M1290 140 l9 20 22 2 -17 14 6 21 -20 -12 -20 12 6 -21 -17 -14 22 -2z" fill="#ffd38a"/>
+    <g class="twinkle" fill="#ffd38a">
+     <circle cx="1260" cy="300" r="5"/><circle cx="1320" cy="290" r="5"/><circle cx="1230" cy="400" r="5"/><circle cx="1300" cy="380" r="5"/><circle cx="1360" cy="410" r="5"/>
+     <circle cx="1200" cy="520" r="5"/><circle cx="1270" cy="480" r="5"/><circle cx="1340" cy="500" r="5"/><circle cx="1400" cy="530" r="5"/>
+    </g>
+    <g class="twinkle" fill="#ff4258" style="animation-delay:-1.2s">
+     <circle cx="1290" cy="260" r="6"/><circle cx="1350" cy="350" r="6"/><circle cx="1210" cy="460" r="6"/><circle cx="1310" cy="440" r="6"/><circle cx="1380" cy="470" r="6"/><circle cx="1240" cy="540" r="6"/>
+    </g>
+   </g>
+   <!-- presents -->
+   <g>
+    <rect x="1150" y="580" width="90" height="70" rx="6" fill="#ff4258"/><rect x="1189" y="580" width="12" height="70" fill="#ffd38a"/>
+    <rect x="1240" y="600" width="70" height="50" rx="6" fill="#f5f3ef"/><rect x="1269" y="600" width="12" height="50" fill="#ff4258"/>
+    <rect x="1315" y="570" width="100" height="80" rx="6" fill="#1c1f2e" stroke="#ffd38a" stroke-width="3"/><rect x="1359" y="570" width="12" height="80" fill="#ffd38a"/>
+    <rect x="1420" y="610" width="60" height="40" rx="6" fill="#3fcf86"/><rect x="1444" y="610" width="12" height="40" fill="#f5f3ef"/>
+    <path d="M1195 580 q-22 -24 -4 -28 q14 -2 4 28 q10 -30 26 -26 q16 6 -26 26" fill="none" stroke="#ffd38a" stroke-width="4"/>
+   </g>
+   <!-- desk + me -->
+   <ellipse cx="820" cy="470" rx="260" ry="150" fill="url(#monglow)"/>
+   <rect x="600" y="560" width="440" height="16" rx="4" fill="#1f2438"/>
+   <rect x="620" y="576" width="12" height="70" fill="#1a1e30"/><rect x="1008" y="576" width="12" height="70" fill="#1a1e30"/>
+   <rect x="720" y="455" width="200" height="104" rx="8" fill="#0d1224" stroke="#2c3350" stroke-width="5"/>
+   <rect x="728" y="463" width="184" height="88" rx="4" fill="#1a2c5c"/>
+   <g stroke="#7fb4ff" stroke-width="3" opacity=".8"><path d="M742 480 h70 M742 494 h110 M752 508 h80 M752 522 h56 M742 536 h90"/></g>
+   <rect x="812" y="559" width="16" height="6" fill="#2c3350"/>
+   <!-- chair + figure (seen from behind, black hoodie) -->
+   <rect x="770" y="600" width="110" height="20" rx="6" fill="#151826"/>
+   <rect x="818" y="620" width="14" height="40" fill="#151826"/>
+   <path d="M760 600 q0 -80 30 -100 q35 -18 70 0 q30 20 30 100z" fill="#0a0b10"/>
+   <path d="M790 500 q35 -22 70 0" fill="none" stroke="rgba(127,180,255,.45)" stroke-width="3"/>
+   <circle cx="825" cy="478" r="30" fill="#0a0b10"/>
+   <path d="M796 478 q29 -40 58 0" fill="none" stroke="rgba(127,180,255,.5)" stroke-width="3"/>
+   <path d="M806 520 l-8 50 M844 520 l8 50" stroke="#16182a" stroke-width="3"/>
+  </svg>
+ </div>
+ <div class="title glass">
+  <h1>Joshan's wish list <span style="color:var(--mute);font-weight:700">(&amp; goals list)</span></h1>
+  <p>Honestly, the only thing I need is to be better than yesterday's me. So this is everything I want, from apple juice to a Lamborghini. The cheap stuff is at the top.</p>
+  <p class="motto">Excited by the idea, satisfied by the result.</p>
+  <div class="stats" id="stats"></div>
+ </div>
+</div>
+
+<nav class="tabs glass" aria-label="Filter by tier"><div class="row" id="tabs"></div></nav>
+
+<main class="wrap" id="list"></main>
+
+<section class="wrap">
+ <div class="notes">
+  <div class="glass"><h3>Sizes</h3><p>Shoes: UK 13. Clothes: XL.</p></div>
+  <div class="glass"><h3>Before you buy</h3><p>Message me first so nobody doubles up, and so I can tell you exact volumes, shades and models. No need to ask about money or black hoodies, black graphic hoodies and joggers. I said infinite.</p></div>
+  <div class="glass"><h3>Tags</h3><p><b style="color:var(--gold)">Ask me</b> means check with me for the exact one. <b style="color:var(--red)">Gifted</b> means someone got it. <b style="color:var(--pine)">Earned</b> means I got it myself.</p></div>
+ </div>
+ <div class="banner glass">
+  <p>The one thing that's actually on me</p>
+  <h2>Better than yesterday's me</h2>
+  <p>Every day. No link for this one.</p>
+ </div>
+</section>
+<footer>Updated November 2026. Some of this is unrealistic. That's part of the point.</footer>
+
+<script>
+{
+// item: [name, description, links[[label,url]], tag]  tag: 'ask' | 'gifted' | 'earned' | ''
+const tiers=[
+ {id:'grab',lvl:'Level 1',name:'Just grab it',desc:'Cheap, easy, always appreciated.',items:[
+  ['Infinite apple juice','Any amount accepted. Infinite preferred.',[]],
+  ['Infinite white Monster','Monster Ultra White. The fuel.',[['12-pack','https://thebottleclub.com/products/monster-ultra-white-energy-drink-can-multipack-12-x-500-ml']]],
+  ['Creatine','Plain unflavoured monohydrate.',[['Myprotein','https://www.myprotein.com/p/sports-nutrition/creatine-monohydrate-powder/10530050/']]],
+  ['Electrolytes','Flavourless if possible.',[['Bulk, unflavoured','https://www.bulk.com/uk/products/electrolyte-powder/bpb-elec-0000']]],
+  ['Tiramisu','Homemade counts double.',[]],
+  ['Lasagna','Same rules as the tiramisu.',[]],
+  ['Manga','Specific volumes, like the key Sasuke ones and Boruto: Two Blue Vortex with the cover art.',[],'ask'],
+  ['Tech company merch','Palantir especially. Any big tech logo works.',[]],
+  ['Duolingo subscription','For the Mandarin grind.',[['Duolingo','https://www.duolingo.com/']]],
+  ['Grey paint for my room','One specific grey.',[],'ask']]},
+ {id:'solid',lvl:'Level 2',name:'Solid gift',desc:'The proper present tier.',items:[
+  ['Nike Air Max 270','UK 13. All black preferred, other colourways are fine too.',[['All black, Nike','https://www.nike.com/gb/t/air-max-270-shoes-KdcVMZ/AH8050-005']]],
+  ['Black hoodies, graphic hoodies and joggers','XL. Mostly black. There is no such thing as too many.',[]],
+  ['Acne Studios','Anything black, size XL. Like this hoodie.',[['Logo hoodie','https://www.mytheresa.com/gb/en/men/acne-studios-logo-cotton-blend-hoodie-black-p00830989']]],
+  ['Burberry black scarf','Plain black cashmere, or the black check.',[['Plain black','https://italist.com/products/burberry-scarfs-black-cashmere'],['Black check','https://www.harrods.com/en-gb/p/burberry-cashmere-wide-check-scarf-000000000007902163']]],
+  ['New Xbox controller','Black, ideally.',[['Xbox','https://www.xbox.com/en-GB/accessories/controllers/xbox-wireless-controller']]],
+  ['Fancy pens I can actually use','Nice to write with, not display pieces.',[['Lamy 2000','https://www.lamy.com/en-gb/p/lamy-2000-fountain-pen']]],
+  ['Anime figures','For the collection I\'m planning. Series I like only.',[],'ask'],
+  ['Black rugs','Plain black, or graphic ones that are mostly black.',[]],
+  ['Abstract textured art','Black and white, textured, abstract.',[]],
+  ['Line art paintings','Vector, non-linear lines in black and white with a single accent colour, like graph plots.',[]],
+  ['Wide-angle USB camera','0.5x-style ultra-wide lens, live feed over USB, works as a webcam and a recorder.',[['ELP 4K wide','https://www.newegg.com/p/3C6-00ZE-01EZ6']]],
+  ['Claude Max subscription','For the side projects.',[['Claude Max','https://claude.com/pricing/max']]],
+  ['Mandarin tuition','Something manageable around work and the degree.',[['italki','https://www.italki.com/']]],
+  ['TV wall mount','For a 48" OLED. This one swivels and fits it.',[['Vogel\'s TVM 3465','https://www.richersounds.com/vogels-tvm-3465-black.html']]],
+  ['Bed frame','Black, and long enough for someone who\'s 6\'4". Can come later.',[],'ask']]},
+ {id:'events',lvl:'Level 2.5',name:'Tickets',desc:'Tech expos and career events I could actually get to.',items:[
+  ['FOSDEM, Brussels','30–31 January 2027. Entry is free, so this is train or hotel money.',[['fosdem.org','https://fosdem.org/']]],
+  ['ISE, Barcelona','2–5 February 2027.',[['Register','https://www.iseurope.org/register']]],
+  ['TechEx Global, London','3–4 February 2027, Olympia. Free pass.',[['Eventbrite','https://www.eventbrite.co.uk/e/techex-global-2027-tickets-1982874031606']]],
+  ['Tech Show London','10–11 March 2027, ExCeL.',[['Site','https://techshowlondon.co.uk']]],
+  ['QCon London 2027','Software engineering conference. This one costs proper money.',[['Site','https://qconlondon.com/']]],
+  ['London Tech Week','7–11 June 2027, Olympia. A Premium Pass would be huge.',[['Site','https://londontechweek.com/']]]]},
+ {id:'chip',lvl:'Level 3',name:'Chip in',desc:'Big ticket. Contributions are very welcome.',items:[
+  ['PC parts','I\'m building a new PC. Just send money towards it.',[]],
+  ['China trip','Contributions or anything prepaid for the Shenzhen trip.',[]],
+  ['iPhone 18 Pro Max','Black, for the size.',[['Apple','https://www.apple.com/uk/iphone/']]],
+  ['Smart glasses subscription','Ray-Ban Meta on a monthly plan.',[['EE','https://ee.co.uk/wearables/eyewear/brand:Ray-Ban%20Meta%20Gen%202']]],
+  ['AI robot pet','Something like Loona.',[['Loona','https://keyirobot.com/en-gb/collections/all-products']]],
+  ['New-gen console','Don\'t need it. Won\'t be mad.',[['PS5 Pro','https://www.johnlewis.com/playstation-5-pro-console-with-dualsense-controller/p112736639']]],
+  ['G&G GR4 G26 Black Rose AEG','Airsoft rifle. Seriously cool one.',[['Patrol Base','https://www.patrolbase.co.uk/g-and-g-armament-gr4-g26-combat-machine-aeg-blowback-black-rose']]],
+  ['Money, or stocks','Straight into investing. Boring, but it compounds.',[]]]},
+ {id:'dream',lvl:'Level 4',name:'The dream',desc:'Not expecting these under the tree. Yet.',items:[
+  ['2014 Lamborghini Huracán','In black. THE dream.',[['Black 2014 example','https://carandclassic.com/car/C1748638'],['Black Huracáns for sale','https://www.autotrader.co.uk/cars/used/lamborghini/huracan/black']]],
+  ['Liberty Walk kit','For the Huracán. In black, or black and white.',[['LB-Works kit','https://bulletproofautomotive.com/?p=217312'],['Photos','https://www.speedhunters.com/?p=505868'],['Black LB images','https://www.google.com/search?tbm=isch&q=black+liberty+walk+huracan']]],
+  ['Richard Mille RM 47 Tourbillon','The samurai one. Hand-engraved armour inside the case, 75 made.',[['Richard Mille','https://richardmille.com/collections/rm-47-tourbillon'],['Closer look','https://hypebeast.com/2022/4/richard-mille-bushido-code-47-ronin-rm-47-tourbillon']]],
+  ['Canary Wharf skyrise','High up, with the city view.',[]]]},
+ {id:'cant',lvl:'Level 5',name:'Can\'t wrap these',desc:'Not really giftable, but you could help.',items:[
+  ['Meetings with people at Tencent','Know someone there, especially in Shenzhen? An intro counts as a gift.',[]],
+  ['Z, a black cat','Low allergy, low shedding. Once I\'ve moved out.',[]]]}
+];
+const esc=s=>String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const total=tiers.reduce((n,t)=>n+t.items.length,0);
+document.getElementById('stats').innerHTML=`<span class="stat"><b>${total}</b> things</span><span class="stat"><b>${tiers[0].items.length}</b> cheap ones</span><span class="stat"><b>1</b> Lamborghini</span>`;
+const tabsEl=document.getElementById('tabs'),listEl=document.getElementById('list');
+let cur='all';
+const tagLabel={ask:'Ask me',gifted:'Gifted',earned:'Earned'};
+const renderTabs=()=>{tabsEl.innerHTML=[['all','Everything'],...tiers.map(t=>[t.id,t.name])].map(([id,n])=>
+ `<button type="button" data-id="${id}" aria-pressed="${cur===id}">${esc(n)}</button>`).join('')};
+const card=([n,d,links,tag])=>`<article class="card glass">
+ <h3><span>${esc(n)}</span>${tag?`<span class="tag ${tag}">${tagLabel[tag]}</span>`:''}</h3>
+ <p>${esc(d)}</p>
+ ${links.length?`<div class="links">${links.map(([l,u])=>`<a href="${esc(u)}" target="_blank" rel="noopener">${esc(l)}</a>`).join('')}</div>`:''}
+</article>`;
+const renderList=()=>{listEl.innerHTML=tiers.filter(t=>cur==='all'||cur===t.id).map(t=>`
+ <section class="tier ${t.id}" id="${t.id}">
+  <header><div><p class="lvl">${t.lvl}</p><h2>${esc(t.name)}</h2></div><p class="d">${esc(t.desc)}</p></header>
+  <div class="grid">${t.items.map(card).join('')}</div>
+ </section>`).join('')};
+tabsEl.addEventListener('click',e=>{const b=e.target.closest('button');if(!b)return;cur=b.dataset.id;renderTabs();renderList();
+ tabsEl.querySelector(`[data-id="${cur}"]`)?.scrollIntoView({inline:'center',block:'nearest'});
+ const y=listEl.getBoundingClientRect().top+scrollY-80;if(scrollY>y)scrollTo({top:y,behavior:'smooth'})});
+renderTabs();renderList();
+}
+</script>
+</body>
+</html>
