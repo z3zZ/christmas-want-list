@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Joshan's Wish List</title>
+<title>Joshan's List</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@600;700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
 <style>
@@ -218,7 +218,7 @@ footer{color:var(--mute);font-size:14px;text-align:center;padding:6px 0 36px}
   <div id="room" aria-hidden="true"><span class="hint">Drag to look around</span></div>
  </div>
  <div class="title glass">
-  <h1>Joshan's wish list <span style="color:var(--mute);font-weight:700">(&amp; goals list)</span></h1>
+  <h1>Joshan's list</h1>
   <p>Honestly, the only thing I need is to be better than yesterday's me. So this is everything I want, from apple juice to a Lamborghini. The cheap stuff is at the top.</p>
   <p class="motto">Excited by the idea, satisfied by the result.</p>
   <div class="stats" id="stats"></div>
@@ -255,7 +255,6 @@ const tiers=[
   ['Electrolytes','Flavourless if possible.',[['Bulk, unflavoured','https://www.bulk.com/uk/products/electrolyte-powder/bpb-elec-0000']]],
   ['Tiramisu','Homemade counts double.',[]],
   ['Lasagna','Same rules as the tiramisu.',[]],
-  ['Black rugs','Plain black, or graphic ones that are mostly black.',[]],
   ['Abstract textured art','Black and white, textured, abstract.',[]],
   ['Line art paintings','Vector, non-linear lines in black and white with a single accent colour, like graph plots.',[]],
   ['Manga','Specific volumes, like the key Sasuke ones and Boruto: Two Blue Vortex with the cover art.',[],'ask'],
@@ -264,10 +263,10 @@ const tiers=[
   ['Grey paint for my room','One specific grey.',[],'ask']]},
  {id:'solid',lvl:'Level 2',name:'Solid gift',desc:'The proper present tier.',items:[
   ['Nike Air Max 270','UK 13. All black preferred, other colourways are fine too.',[['All black, Nike','https://www.nike.com/gb/t/air-max-270-shoes-KdcVMZ/AH8050-005']]],
-  ['DerSchutze dragon windbreaker','The dragon one, in black. Size XL.',[['DerSchutze','https://derschutze.com/products/dragon-windbreaker-black']]],
-  ['Black cashmere scarf','Any plain black cashmere one.',[['COS','https://www.cos.com/en-gb/men/accessories/hatsscarvesgloves/scarves/cashmere/product/pure-cashmere-scarf-black-1032425001'],['Cordings','https://www.cordings.co.uk/black-speyside-cashmere-scarf.html'],['Feeling baller','https://www.harrods.com/en-gb/p/burberry-cashmere-wide-check-scarf-000000000007902163']]],
+  ['Black patterned cashmere scarf','Black with a pattern: check, circles, stripes, patchwork.',[['Circles','https://www.lyst.co.uk/accessories/ingmarson-circles-wool-cashmere-scarf-1/'],['Stripes','https://www.lyst.co.uk/accessories/ingmarson-stripes-wool-cashmere-scarf-black/'],['Patchwork','https://www.johnlewis.com/brora-cashmere-patchwork-scarf-black-swan/p4749383'],['Feeling baller','https://www.harrods.com/en-gb/p/burberry-cashmere-wide-check-scarf-000000000007902163']]],
+  ['Black rugs','Plain black, or graphic ones that are mostly black.',[]],
   ['New Xbox controller','White, or a custom anime one.',[['White','https://www.xbox.com/en-GB/accessories/controllers/xbox-wireless-controller'],['Design your own','https://xboxdesignlab.xbox.com/en-gb/controllers/xbox-wireless-controller']]],
-  ['A nice pen','Writes well and looks luxury, without the silly price.',[['rOtring 600','https://www.goldspot.com/products/rotring-600-series-black-ballpoint-pen']]],
+  ['A nice pen','Looks luxury, writes well, no silly price. Black with gold trim.',[['Parker IM Premium','https://www.penheaven.co.uk/parker-im-premium-black-gold-trim-ballpoint']]],
   ['Wide-angle action camera','For vlogging, and it doubles as a USB webcam so I can use it for rewnd timelapses.',[['DJI Osmo Action 4','https://www.very.co.uk/browse/technology-action-cams/brand--dji']]],
   ['Anime figures','For the collection I\'m planning. Series I like only.',[],'ask'],
   ['TV wall mount','For a 48" OLED. This one swivels and fits it.',[['Vogel\'s TVM 3465','https://www.richersounds.com/vogels-tvm-3465-black.html']]],
@@ -287,10 +286,11 @@ const tiers=[
   ['Smart glasses with a display','The kind with a screen in the lens and live translation, no camera. Not Meta, and not a VR headset.',[['Even Realities G2','https://www.evenrealities.com/translation-glasses']]],
   ['Claude Max subscription','For the side projects.',[['Claude Max','https://claude.com/pricing/max']]],
   ['Mandarin tuition','Something manageable around work and the degree.',[['italki','https://www.italki.com/']]],
+  ['DerSchutze Shibuya puffer','The raw denim puffer jacket in black, size XL.',[['DerSchutze','https://derschutze.com/collections/outerwear/products/shibuya-raw-denim-puffer-jacket-black']]],
   ['Acne Studios','Anything black, size XL.',[['Zip hoodie, Mr Porter','https://www.mrporter.com/en-gb/mens/product/acne-studios/clothing/zip-through/fupiter-logo-appliqued-cotton-jersey-zip-up-hoodie/1647597346626982'],['Logo hoodie, Selfridges','https://www.selfridges.com/GB/en/product/acne-studios-franziska-1996-cotton-blend-hoodie_R04580903/']]],
   ['G&G GR4 G26 Black Rose AEG','Airsoft rifle. Seriously cool one.',[['Patrol Base','https://www.patrolbase.co.uk/g-and-g-armament-gr4-g26-combat-machine-aeg-blowback-black-rose']]],
   ['iPhone 18 Pro Max','Black, for the size.',[['Apple','https://www.apple.com/uk/iphone/']]]]},
- {id:'dream',lvl:'Level 4',name:'The day 1',desc:'Day one of having made it. Not expecting these under the tree. Yet.',items:[
+ {id:'dream',lvl:'Level 4',name:'The day 1',desc:'Not "one day". Day one. These are the day-one mindset goals.',items:[
   ['2014 Lamborghini Huracán','In black. THE dream.',[['Black Huracáns for sale','https://www.autotrader.co.uk/cars/used/lamborghini/huracan/black'],['Photos','https://www.google.com/search?tbm=isch&q=black+2014+lamborghini+huracan+lp610-4']]],
   ['Liberty Walk kit','For the Huracán. In black, or black and white.',[['LB-Works kit','https://bulletproofautomotive.com/?p=217312'],['Photos','https://www.speedhunters.com/?p=505868'],['Black LB images','https://www.google.com/search?tbm=isch&q=black+liberty+walk+huracan']]],
   ['Richard Mille RM 47 Tourbillon','The samurai one. Hand-engraved armour inside the case, 75 made.',[['Richard Mille','https://richardmille.com/collections/rm-47-tourbillon'],['Closer look','https://hypebeast.com/2022/4/richard-mille-bushido-code-47-ronin-rm-47-tourbillon']]],
@@ -400,7 +400,16 @@ try{
  B(270,0,0,5,207,6,WHITE);B(365,0,0,5,207,6,WHITE);B(270,203,0,100,6,6,WHITE);
  // desk, monitor, katanas
  B(0,74,D-70,180,3,70,0x111111);[[2,D-68],[175,D-68],[2,D-5],[175,D-5]].forEach(p=>B(p[0],0,p[1],3,74,3,0x111111));
- B(58,83,D-20,64,39,3,0x050505);B(61,86,D-20.6,58,33,.4,0x2a5aaa,{emissive:0x3a6ad0,emissiveIntensity:.9});
+ B(58,83,D-20,64,39,3,0x050505);const code=document.createElement('canvas');code.width=320;code.height=182;const cg=code.getContext('2d');
+ cg.fillStyle='#050a18';cg.fillRect(0,0,320,182);
+ const glyphs='01{}[]()<>=;:+-*/&|!?constletfnreturnifelse=>async awaitclassimport';const cols=Math.floor(320/9),drops=Array.from({length:cols},()=>Math.random()*-20);
+ const codeTex=new THREE.CanvasTexture(code);
+ const scr=new THREE.Mesh(new THREE.PlaneGeometry(58,33),new THREE.MeshBasicMaterial({map:codeTex}));
+ scr.position.set(90-W/2,102.5,D-20.8-D/2);scr.rotation.y=Math.PI;G.add(scr);
+ let lastCode=0;
+ const drawCode=t=>{if(t-lastCode<.06)return;lastCode=t;cg.fillStyle='rgba(5,10,24,.22)';cg.fillRect(0,0,320,182);cg.font='bold 11px monospace';
+  drops.forEach((y,i)=>{const ch=glyphs[(Math.random()*glyphs.length)|0];cg.fillStyle=Math.random()<.08?'#ffffff':(i%3?'#7fb4ff':'#ffd38a');cg.fillText(ch,i*9,y*12);
+   drops[i]=y*12>182&&Math.random()>.95?0:y+1});codeTex.needsUpdate=true};
  B(87,77,D-18,6,7,6,0x111111);B(68,77,D-58,46,1.5,15,0x1a1a1a);
  L(90,110,D-60,0x6a9aff,.9,170);
  B(45,168,D-6,4,34,6,0x111111);B(105,168,D-6,4,34,6,0x111111);katana(192);katana(177);
@@ -408,7 +417,7 @@ try{
  const bw=135,bl=190,bxx=190,cx=bxx+bw/2,foot=D-bl;
  B(bxx,0,foot,bw,30,bl,0x161616);B(bxx+2,30,foot+2,bw-4,22,bl-6,0xcfc7d8);B(bxx,0,D-6,bw,105,6,0x161616);
  B(bxx+10,52,D-45,bw/2-15,10,32,0xece6f2);B(bxx+bw/2+5,52,D-45,bw/2-15,10,32,0xece6f2);B(bxx+2,52,foot+4,bw-4,4,bl-60,0x2a2a34);
- [[0x2b2f5a,0xe06a8a],[0x1f1f2e,0xf2c6de],[0x3a2550,0x8fb3d9]].forEach((c,i)=>{const x=cx-20+(i-1)*48;B(x,122,D-4,40,30,4,c[0]);B(x+7,128,D-4.6,26,18,.4,c[1],{emissive:c[1],emissiveIntensity:.15})});
+ [[0x0e0e0e,0xf4f4f4],[0xf4f4f4,0x0e0e0e],[0x0e0e0e,0xf4f4f4]].forEach((c,i)=>{const x=cx-20+(i-1)*48;B(x,122,D-4,40,30,4,c[0]);B(x+7,128,D-4.6,26,18,.4,c[1],{emissive:c[1],emissiveIntensity:.12})});
  B(W-11,18,foot,9,60,100,0xe8e8ee);
  // me, at the desk in a black hoodie (seen from behind)
  const HOOD=0x0c0c10,SKIN=0x8a5a3c;
@@ -451,7 +460,7 @@ try{
  const clock=new THREE.Clock();
  (function loop(){requestAnimationFrame(loop);if(!visible)return;const t=clock.getElapsedTime();
   if(!reduce){const p=sg.attributes.position.array;for(let i=0;i<N;i++){p[i*3+1]-=.35+(i%5)*.06;if(p[i*3+1]<0)p[i*3+1]=320}sg.attributes.position.needsUpdate=true;
-   bulbs.forEach((m,i)=>m.visible=Math.sin(t*2+i*1.7)>-.6);tl1.intensity=1.2+Math.sin(t*1.5)*.2;
+   bulbs.forEach((m,i)=>m.visible=Math.sin(t*2+i*1.7)>-.6);drawCode(t);tl1.intensity=1.2+Math.sin(t*1.5)*.2;
   }
   const idle=drag||reduce?0:Math.sin(t*.2)*.06;yaw+=(tyaw+idle-yaw)*.08;pitch+=(tpitch-pitch)*.08;
   const Y=yaw0+yaw,Pt=pitch0+pitch;cam.position.copy(eye);
