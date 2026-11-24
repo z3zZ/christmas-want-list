@@ -32,6 +32,10 @@ a{color:inherit}
 .hero{position:relative;padding-top:clamp(12px,2vw,24px)}
 .scene{position:relative;border-radius:30px;overflow:hidden;aspect-ratio:16/8.2;min-height:300px;border:1px solid var(--edge)}
 .scene svg{position:absolute;inset:0;width:100%;height:100%}
+#room{position:absolute;inset:0;opacity:0;transition:opacity .6s}#room.ready{opacity:1}
+#room canvas{display:block;width:100%!important;height:100%!important}
+#room .hint{display:none;position:absolute;right:14px;top:12px;font-size:13px;padding:5px 11px;border-radius:999px;background:rgba(0,0,0,.35);color:var(--mute);pointer-events:none}
+#room.drag .hint{display:block}#room.drag canvas{cursor:grab}
 .title{position:absolute;left:calc(max(4vw,14px) + clamp(14px,3vw,36px));bottom:clamp(14px,3vw,36px);max-width:min(440px,40%);padding:clamp(18px,2.4vw,30px)}
 h1{font:800 clamp(30px,4.6vw,52px)/1.04 "Inter Tight",Inter,sans-serif;margin:0 0 12px;text-wrap:balance;letter-spacing:-.02em}
 .title p{margin:0 0 10px;color:rgba(245,243,239,.86)}
@@ -93,7 +97,7 @@ footer{color:var(--mute);font-size:14px;text-align:center;padding:6px 0 36px}
 </head>
 <body>
 <div class="wrap hero">
- <div class="scene" role="img" aria-label="Illustration of my room on a snowy Christmas night: a bay window over a city skyline, a lit tree with presents, and me at my desk">
+ <div class="scene" role="img" aria-label="My bedroom on a snowy Christmas night: a tree with presents in the bay window, and me at my desk">
   <svg viewBox="0 0 1600 820" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
    <defs>
     <linearGradient id="wall" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#151a2b"/><stop offset="1" stop-color="#0c0f1a"/></linearGradient>
@@ -193,6 +197,7 @@ footer{color:var(--mute);font-size:14px;text-align:center;padding:6px 0 36px}
    <path d="M796 478 q29 -40 58 0" fill="none" stroke="rgba(127,180,255,.5)" stroke-width="3"/>
    <path d="M806 520 l-8 50 M844 520 l8 50" stroke="#16182a" stroke-width="3"/>
   </svg>
+  <div id="room" aria-hidden="true"><span class="hint">Drag to look around</span></div>
  </div>
  <div class="title glass">
   <h1>Joshan's wish list <span style="color:var(--mute);font-weight:700">(&amp; goals list)</span></h1>
@@ -227,26 +232,23 @@ const tiers=[
  {id:'grab',lvl:'Level 1',name:'Just grab it',desc:'Cheap, easy, always appreciated.',items:[
   ['Infinite apple juice','Any amount accepted. Infinite preferred.',[]],
   ['Infinite white Monster','Monster Ultra White. The fuel.',[['12-pack','https://thebottleclub.com/products/monster-ultra-white-energy-drink-can-multipack-12-x-500-ml']]],
+  ['Black hoodies, graphic hoodies and joggers','XL, comfy, mostly black. There is no such thing as too many.',[]],
   ['Creatine','Plain unflavoured monohydrate.',[['Myprotein','https://www.myprotein.com/p/sports-nutrition/creatine-monohydrate-powder/10530050/']]],
   ['Electrolytes','Flavourless if possible.',[['Bulk, unflavoured','https://www.bulk.com/uk/products/electrolyte-powder/bpb-elec-0000']]],
   ['Tiramisu','Homemade counts double.',[]],
   ['Lasagna','Same rules as the tiramisu.',[]],
+  ['Black rugs','Plain black, or graphic ones that are mostly black.',[]],
+  ['Abstract textured art','Black and white, textured, abstract.',[]],
+  ['Line art paintings','Vector, non-linear lines in black and white with a single accent colour, like graph plots.',[]],
   ['Manga','Specific volumes, like the key Sasuke ones and Boruto: Two Blue Vortex with the cover art.',[],'ask'],
   ['Tech company merch','Palantir especially. Any big tech logo works.',[]],
   ['Duolingo subscription','For the Mandarin grind.',[['Duolingo','https://www.duolingo.com/']]],
   ['Grey paint for my room','One specific grey.',[],'ask']]},
  {id:'solid',lvl:'Level 2',name:'Solid gift',desc:'The proper present tier.',items:[
   ['Nike Air Max 270','UK 13. All black preferred, other colourways are fine too.',[['All black, Nike','https://www.nike.com/gb/t/air-max-270-shoes-KdcVMZ/AH8050-005']]],
-  ['Black hoodies, graphic hoodies and joggers','XL. Mostly black. There is no such thing as too many.',[]],
-  ['Acne Studios','Anything black, size XL. Like this hoodie.',[['Logo hoodie','https://www.mytheresa.com/gb/en/men/acne-studios-logo-cotton-blend-hoodie-black-p00830989']]],
-  ['Burberry black scarf','Plain black cashmere, or the black check.',[['Plain black','https://italist.com/products/burberry-scarfs-black-cashmere'],['Black check','https://www.harrods.com/en-gb/p/burberry-cashmere-wide-check-scarf-000000000007902163']]],
   ['New Xbox controller','Black, ideally.',[['Xbox','https://www.xbox.com/en-GB/accessories/controllers/xbox-wireless-controller']]],
   ['Fancy pens I can actually use','Nice to write with, not display pieces.',[['Lamy 2000','https://www.lamy.com/en-gb/p/lamy-2000-fountain-pen']]],
   ['Anime figures','For the collection I\'m planning. Series I like only.',[],'ask'],
-  ['Black rugs','Plain black, or graphic ones that are mostly black.',[]],
-  ['Abstract textured art','Black and white, textured, abstract.',[]],
-  ['Line art paintings','Vector, non-linear lines in black and white with a single accent colour, like graph plots.',[]],
-  ['Wide-angle USB camera','0.5x-style ultra-wide lens, live feed over USB, works as a webcam and a recorder.',[['ELP 4K wide','https://www.newegg.com/p/3C6-00ZE-01EZ6']]],
   ['Claude Max subscription','For the side projects.',[['Claude Max','https://claude.com/pricing/max']]],
   ['Mandarin tuition','Something manageable around work and the degree.',[['italki','https://www.italki.com/']]],
   ['TV wall mount','For a 48" OLED. This one swivels and fits it.',[['Vogel\'s TVM 3465','https://www.richersounds.com/vogels-tvm-3465-black.html']]],
@@ -258,23 +260,25 @@ const tiers=[
   ['Tech Show London','10–11 March 2027, ExCeL.',[['Site','https://techshowlondon.co.uk']]],
   ['QCon London 2027','Software engineering conference. This one costs proper money.',[['Site','https://qconlondon.com/']]],
   ['London Tech Week','7–11 June 2027, Olympia. A Premium Pass would be huge.',[['Site','https://londontechweek.com/']]]]},
- {id:'chip',lvl:'Level 3',name:'Chip in',desc:'Big ticket. Contributions are very welcome.',items:[
+ {id:'chip',lvl:'Level 3',name:'Chip in',desc:'Big ticket or luxury. Contributions are very welcome.',items:[
+  ['AI robot pet','I would genuinely love one of these. Vector 2.0 (the little desk robot) or AIBI (the pocket one).',[['Vector 2.0','https://uk.robotshop.com/products/vector-20-ai-robot-companion'],['AIBI','https://www.living.ai']]],
+  ['Smart glasses with a display','The kind with a screen in the lens and live translation, no camera. Not Meta, and not a VR headset.',[['Even Realities G2','https://www.evenrealities.com/translation-glasses']]],
+  ['Vlogging camera','Something that also works as a USB webcam.',[['DJI Osmo Pocket 4','https://store.dji.com/uk/product/osmo-pocket-4?set_region=GB']]],
+  ['Acne Studios','Anything black, size XL. Like this hoodie.',[['Logo hoodie','https://www.mytheresa.com/gb/en/men/acne-studios-logo-cotton-blend-hoodie-black-p00830989']]],
+  ['Burberry black scarf','Plain black cashmere, or the black check.',[['Plain black','https://italist.com/products/burberry-scarfs-black-cashmere'],['Black check','https://www.harrods.com/en-gb/p/burberry-cashmere-wide-check-scarf-000000000007902163']]],
+  ['G&G GR4 G26 Black Rose AEG','Airsoft rifle. Seriously cool one.',[['Patrol Base','https://www.patrolbase.co.uk/g-and-g-armament-gr4-g26-combat-machine-aeg-blowback-black-rose']]],
+  ['iPhone 18 Pro Max','Black, for the size.',[['Apple','https://www.apple.com/uk/iphone/']]],
   ['PC parts','I\'m building a new PC. Just send money towards it.',[]],
   ['China trip','Contributions or anything prepaid for the Shenzhen trip.',[]],
-  ['iPhone 18 Pro Max','Black, for the size.',[['Apple','https://www.apple.com/uk/iphone/']]],
-  ['Smart glasses subscription','Ray-Ban Meta on a monthly plan.',[['EE','https://ee.co.uk/wearables/eyewear/brand:Ray-Ban%20Meta%20Gen%202']]],
-  ['AI robot pet','Something like Loona.',[['Loona','https://keyirobot.com/en-gb/collections/all-products']]],
-  ['New-gen console','Don\'t need it. Won\'t be mad.',[['PS5 Pro','https://www.johnlewis.com/playstation-5-pro-console-with-dualsense-controller/p112736639']]],
-  ['G&G GR4 G26 Black Rose AEG','Airsoft rifle. Seriously cool one.',[['Patrol Base','https://www.patrolbase.co.uk/g-and-g-armament-gr4-g26-combat-machine-aeg-blowback-black-rose']]],
   ['Money, or stocks','Straight into investing. Boring, but it compounds.',[]]]},
  {id:'dream',lvl:'Level 4',name:'The dream',desc:'Not expecting these under the tree. Yet.',items:[
-  ['2014 Lamborghini Huracán','In black. THE dream.',[['Black 2014 example','https://carandclassic.com/car/C1748638'],['Black Huracáns for sale','https://www.autotrader.co.uk/cars/used/lamborghini/huracan/black']]],
+  ['2014 Lamborghini Huracán','In black. THE dream.',[['Black Huracáns for sale','https://www.autotrader.co.uk/cars/used/lamborghini/huracan/black'],['Photos','https://www.google.com/search?tbm=isch&q=black+2014+lamborghini+huracan+lp610-4']]],
   ['Liberty Walk kit','For the Huracán. In black, or black and white.',[['LB-Works kit','https://bulletproofautomotive.com/?p=217312'],['Photos','https://www.speedhunters.com/?p=505868'],['Black LB images','https://www.google.com/search?tbm=isch&q=black+liberty+walk+huracan']]],
   ['Richard Mille RM 47 Tourbillon','The samurai one. Hand-engraved armour inside the case, 75 made.',[['Richard Mille','https://richardmille.com/collections/rm-47-tourbillon'],['Closer look','https://hypebeast.com/2022/4/richard-mille-bushido-code-47-ronin-rm-47-tourbillon']]],
   ['Canary Wharf skyrise','High up, with the city view.',[]]]},
  {id:'cant',lvl:'Level 5',name:'Can\'t wrap these',desc:'Not really giftable, but you could help.',items:[
   ['Meetings with people at Tencent','Know someone there, especially in Shenzhen? An intro counts as a gift.',[]],
-  ['Z, a black cat','Low allergy, low shedding. Once I\'ve moved out.',[]]]}
+  ['Z, a majestic black cat','Low allergy, low shedding.',[]]]}
 ];
 const esc=s=>String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const total=tiers.reduce((n,t)=>n+t.items.length,0);
@@ -298,6 +302,139 @@ tabsEl.addEventListener('click',e=>{const b=e.target.closest('button');if(!b)ret
  tabsEl.querySelector(`[data-id="${cur}"]`)?.scrollIntoView({inline:'center',block:'nearest'});
  const y=listEl.getBoundingClientRect().top+scrollY-80;if(scrollY>y)scrollTo({top:y,behavior:'smooth'})});
 renderTabs();renderList();
+}
+</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/controls/OrbitControls.js"></script>
+<script>
+{
+// The bedroom render (z3zZ/bedroom-render), dressed for Christmas. Room units are cm.
+// x runs along the shelf wall (0 = window corner), z from the shelf wall towards the desk wall.
+const host=document.getElementById('room');
+try{
+ if(!window.THREE)throw new Error('three.js did not load');
+ const W=370,H=240,D=345;
+ const renderer=new THREE.WebGLRenderer({antialias:true});
+ renderer.setPixelRatio(Math.min(devicePixelRatio,1.75));
+ host.appendChild(renderer.domElement);
+ const scene=new THREE.Scene();
+ scene.background=new THREE.Color(0x070a14);
+ const cam=new THREE.PerspectiveCamera(58,1,1,4000);
+ const G=new THREE.Group();scene.add(G);
+ scene.add(new THREE.AmbientLight(0x7a6aa0,0.8));
+ const mat=(c,o)=>new THREE.MeshStandardMaterial(Object.assign({color:c,roughness:0.8},o||{}));
+ function B(x,y,z,w,h,d,c,o){const m=new THREE.Mesh(new THREE.BoxGeometry(w,h,d),mat(c,o));m.position.set(x+w/2-W/2,y+h/2,z+d/2-D/2);G.add(m);return m}
+ function S(x1,z1,x2,z2,y,h,t,c,o){const dx=x2-x1,dz=z2-z1,len=Math.hypot(dx,dz);const m=new THREE.Mesh(new THREE.BoxGeometry(len,h,t),mat(c,o));
+  m.position.set((x1+x2)/2-W/2,y+h/2,(z1+z2)/2-D/2);m.rotation.y=-Math.atan2(dz,dx);G.add(m);return m}
+ function L(x,y,z,c,i,r){const p=new THREE.PointLight(c,i,r||140);p.position.set(x-W/2,y,z-D/2);G.add(p);return p}
+ const BLK=0x1e1a1c,WALL=0x2e2440,WHITE=0xd8d4e0;
+ const pastel=[0xf2c6de,0xc6d8f2,0xf7e1a8,0xd9c6f2,0xffffff,0xb8e0d2];
+ const fig=(x,y,z,k)=>{B(x-4,y,z-4,8,4,8,0x111111);B(x-3,y+4,z-3,6,14+(k%3)*4,6,pastel[k%6])};
+ const manga=(x,y,w)=>{for(let i=0;i<w/2.2;i++)B(x+i*2.2,y,6,2,17,12,pastel[(i*7)%6])};
+ const puck=(x,y)=>B(x-2,y-1,10,4,1,4,0xffe0a0,{emissive:0xffc070,emissiveIntensity:1});
+ const shelves=(x0,w,ys)=>ys.forEach(y=>B(x0,y,0,w,2,28,BLK));
+ function katana(y){B(28,y,D-9,92,2.4,2.6,0x0c0c0c,{roughness:0.35});B(120,y-0.6,D-10,2,3.6,4,0xb08a3a,{metalness:0.6,roughness:0.4});
+  B(122,y,D-9,28,2.6,2.6,0x5a1222);for(let i=0;i<6;i++)B(124+i*4.5,y-0.1,D-9.2,1.2,2.8,3,0x0c0c0c)}
+ // night outside the bay: sky, skyline, moon
+ const sky=document.createElement('canvas');sky.width=1024;sky.height=512;const g=sky.getContext('2d');
+ const grad=g.createLinearGradient(0,0,0,512);grad.addColorStop(0,'#0a1230');grad.addColorStop(1,'#2a2552');g.fillStyle=grad;g.fillRect(0,0,1024,512);
+ g.fillStyle='#f3eedd';g.beginPath();g.arc(760,110,34,0,7);g.fill();
+ for(let i=0;i<90;i++){g.fillStyle='rgba(255,255,255,'+(0.3+Math.random()*0.6)+')';g.fillRect(Math.random()*1024,Math.random()*260,2,2)}
+ let bx=0;while(bx<1024){const bw=40+Math.random()*70,bh=90+Math.random()*200;g.fillStyle='#141a36';g.fillRect(bx,512-bh,bw,bh);
+  g.fillStyle='rgba(255,211,138,.75)';for(let wy=512-bh+12;wy<500;wy+=18)for(let wx=bx+8;wx<bx+bw-8;wx+=14)if(Math.random()<.28)g.fillRect(wx,wy,5,7);bx+=bw+4}
+ g.fillStyle='#e8ecf5';g.fillRect(0,496,1024,16);
+ const skyTex=new THREE.CanvasTexture(sky);
+ const back=new THREE.Mesh(new THREE.PlaneGeometry(1100,550),new THREE.MeshBasicMaterial({map:skyTex}));
+ back.position.set(-W/2-420,170,0);back.rotation.y=Math.PI/2;scene.add(back);
+ // falling snow outside the window
+ const N=500,pos=new Float32Array(N*3);
+ for(let i=0;i<N;i++){pos[i*3]=-W/2-60-Math.random()*320;pos[i*3+1]=Math.random()*320;pos[i*3+2]=(Math.random()-.5)*700}
+ const sg=new THREE.BufferGeometry();sg.setAttribute('position',new THREE.BufferAttribute(pos,3));
+ const snow=new THREE.Points(sg,new THREE.PointsMaterial({color:0xffffff,size:2.6,transparent:true,opacity:.85}));scene.add(snow);
+ // bay window
+ const z0=25,z1=D-60,zc=(z0+z1)/2,a=(z1-z0)/2,b=55,NP=5,pts=[];
+ for(let i=0;i<=NP;i++){const t=-Math.PI/2+Math.PI*i/NP;pts.push([-b*Math.cos(t),zc+a*Math.sin(t)])}
+ B(-b-4,-1,z0,b+4,1,z1-z0,0x3a2a3e);
+ for(let i=0;i<NP;i++){const[p,q]=[pts[i],pts[i+1]];
+  S(p[0],p[1],q[0],q[1],0,86,6,WALL);S(p[0],p[1],q[0],q[1],86,4,14,WHITE);
+  S(p[0],p[1],q[0],q[1],90,112,1,0x334477,{transparent:true,opacity:.18,roughness:.1});
+  S(p[0],p[1],q[0],q[1],168,3,5,WHITE);S(p[0],p[1],q[0],q[1],202,5,6,WHITE);S(p[0],p[1],q[0],q[1],207,33,6,WALL);
+  B(p[0]-2.5,90,p[1]-2.5,5,112,5,WHITE)}
+ B(pts[NP][0]-2.5,90,pts[NP][1]-2.5,5,112,5,WHITE);B(-b,234,z0,b,6,z1-z0,0x241c30);
+ const inset=(p,k)=>[p[0]*k,zc+(p[1]-zc)*k];
+ [[0,1],[NP-1,NP]].forEach(([i,j])=>{const p=inset(pts[i],.88),q=inset(pts[j],.88);S(p[0],p[1],q[0],q[1],4,226,9,0x2a2436)});
+ L(-30,150,zc,0x7f9fe8,0.35,260);
+ // room shell
+ B(0,-1,0,W,1,D,0x3a2a3e);B(0,0,-2,W,H,2,WALL);B(W,0,0,2,H,D,WALL);B(0,0,D,W,H,2,WALL);
+ B(-2,0,0,2,H,25,WALL);B(-2,0,D-60,2,H,60,WALL);B(0,H,0,W,2,D,0x1a1426);
+ B(0,0,0,W,15,1.5,WHITE);B(W-1.5,0,0,1.5,15,D,WHITE);B(0,0,D-1.5,W,15,1.5,WHITE);
+ // mirror wardrobe, TV wall, figure tower
+ B(0,0,0,100,236,58,BLK);B(3,4,58,46,228,.6,0x9a9aae,{metalness:.7,roughness:.15});B(51,4,58,46,228,.6,0x9a9aae,{metalness:.7,roughness:.15});
+ B(100,0,0,130,237,1,0x241e22);B(100,0,0,2,237,28,BLK);B(228,0,0,2,237,28,BLK);
+ shelves(100,130,[0,6,39,72,157,196,235]);B(164,6,0,2,66,28,BLK);B(164,157,0,2,78,28,BLK);
+ fig(132,41,14,1);manga(170,41,50);fig(132,8,14,3);fig(196,8,14,4);fig(132,159,14,2);fig(196,159,14,5);manga(106,198,50);fig(196,198,14,0);
+ [132,196].forEach(x=>[37,70,194,233].forEach(y=>puck(x,y)));
+ B(111.5,83,4,107,62,2.5,0x050505,{roughness:.25});B(116,88,1.5,98,52,.5,0xffb070,{emissive:0xff9a50,emissiveIntensity:.5});
+ const ty=[0,6,39,72,105,138,171,204,235];
+ B(230,0,0,40,237,1,0x241e22);B(230,0,0,2,237,28,BLK);B(268,0,0,2,237,28,BLK);shelves(230,40,ty);
+ ty.slice(1,8).forEach((y,i)=>{fig(250,y+2,14,i);puck(250,ty[i+2]-.5)});
+ L(250,200,30,0xffc080,.5);L(165,215,30,0xffc080,.5);L(165,55,30,0xffc080,.4);
+ B(270,0,0,5,207,6,WHITE);B(365,0,0,5,207,6,WHITE);B(270,203,0,100,6,6,WHITE);
+ // desk, monitor, katanas
+ B(0,74,D-70,180,3,70,0x111111);[[2,D-68],[175,D-68],[2,D-5],[175,D-5]].forEach(p=>B(p[0],0,p[1],3,74,3,0x111111));
+ B(58,83,D-20,64,39,3,0x050505);B(61,86,D-20.6,58,33,.4,0x2a5aaa,{emissive:0x3a6ad0,emissiveIntensity:.9});
+ B(87,77,D-18,6,7,6,0x111111);B(68,77,D-58,46,1.5,15,0x1a1a1a);
+ L(90,110,D-60,0x6a9aff,.9,170);
+ B(45,168,D-6,4,34,6,0x111111);B(105,168,D-6,4,34,6,0x111111);katana(192);katana(177);
+ // bed and canvases
+ const bw=135,bl=190,bxx=190,cx=bxx+bw/2,foot=D-bl;
+ B(bxx,0,foot,bw,30,bl,0x161616);B(bxx+2,30,foot+2,bw-4,22,bl-6,0xcfc7d8);B(bxx,0,D-6,bw,105,6,0x161616);
+ B(bxx+10,52,D-45,bw/2-15,10,32,0xece6f2);B(bxx+bw/2+5,52,D-45,bw/2-15,10,32,0xece6f2);B(bxx+2,52,foot+4,bw-4,4,bl-60,0x2a2a34);
+ [[0x2b2f5a,0xe06a8a],[0x1f1f2e,0xf2c6de],[0x3a2550,0x8fb3d9]].forEach((c,i)=>{const x=cx-20+(i-1)*48;B(x,122,D-4,40,30,4,c[0]);B(x+7,128,D-4.6,26,18,.4,c[1],{emissive:c[1],emissiveIntensity:.15})});
+ B(W-11,18,foot,9,60,100,0xe8e8ee);
+ // me, at the desk in a black hoodie (seen from behind)
+ const HOOD=0x0c0c10,SKIN=0x8a5a3c;
+ B(70,0,D-128,42,4,42,0x111111);B(88,4,D-110,6,40,6,0x111111);B(68,44,D-130,46,6,46,BLK);B(68,50,D-134,46,62,5,BLK);
+ B(74,50,D-122,36,14,50,0x18181f);B(76,0,D-80,13,52,13,0x18181f);B(95,0,D-80,13,52,13,0x18181f);
+ B(76,0,D-72,13,6,20,0x0a0a0a);B(95,0,D-72,13,6,20,0x0a0a0a);
+ const torso=B(70,60,D-122,44,54,26,HOOD);torso.rotation.x=.12;
+ B(62,80,D-116,11,11,44,HOOD);B(111,80,D-116,11,11,44,HOOD);
+ B(66,79,D-74,8,6,10,SKIN);B(110,79,D-74,8,6,10,SKIN);
+ const head=new THREE.Mesh(new THREE.SphereGeometry(11,20,16),mat(0x111114));head.position.set(92-W/2,128,D-106-D/2);G.add(head);
+ const hood=new THREE.Mesh(new THREE.SphereGeometry(13.5,20,16,0,Math.PI*2,0,Math.PI*.62),mat(HOOD));hood.position.set(92-W/2,127,D-109-D/2);hood.rotation.x=-.5;G.add(hood);
+ // Christmas tree in the bay, with lights, star and presents
+ const TX=-6,TZ=108,tree=new THREE.Group();tree.position.set(TX-W/2,0,TZ-D/2);G.add(tree);
+ const pot=new THREE.Mesh(new THREE.CylinderGeometry(15,12,22,20),mat(0x2a1d18));pot.position.y=11;tree.add(pot);
+ [[0,44,70],[38,36,58],[70,27,48],[96,18,40]].forEach(([y,r,h])=>{const c=new THREE.Mesh(new THREE.ConeGeometry(r,h,22),mat(0x1d5a3a,{roughness:.9}));c.position.y=22+y+h/2;tree.add(c)});
+ const star=new THREE.Mesh(new THREE.OctahedronGeometry(7),mat(0xffd38a,{emissive:0xffc060,emissiveIntensity:1}));star.position.y=184;tree.add(star);
+ const bulbs=[];const bcols=[0xffd38a,0xff4258,0xffd38a,0x9fd0ff];
+ for(let i=0;i<46;i++){const t=i/46,y=26+t*150,r=(1-t)*42+3,ang=i*2.4;
+  const m=new THREE.Mesh(new THREE.SphereGeometry(1.9,8,6),new THREE.MeshBasicMaterial({color:bcols[i%4]}));
+  m.position.set(Math.cos(ang)*r,y,Math.sin(ang)*r);tree.add(m);bulbs.push(m)}
+ const tl1=new THREE.PointLight(0xffc070,1.4,260);tl1.position.set(20,120,0);tree.add(tl1);
+ const tl2=new THREE.PointLight(0xff5a6a,.5,180);tl2.position.set(20,60,10);tree.add(tl2);
+ const gift=(x,z,w,h,d,c,rib)=>{B(x,0,z,w,h,d,c);B(x+w/2-2,0,z-.3,4,h+.4,d+.6,rib);B(x-.3,0,z+d/2-2,w+.6,h+.4,4,rib)};
+ gift(16,72,26,20,24,0xd8293f,0xffd38a);gift(20,132,22,16,22,0xf2f0ec,0xd8293f);gift(8,154,30,24,22,0x15151c,0xffd38a);gift(34,104,18,13,18,0x2f9f66,0xf2f0ec);gift(-30,76,20,15,20,0xd8293f,0xf2f0ec);
+ // camera: from the door end, looking across to the bay, tree and desk
+ const P=(x,y,z)=>new THREE.Vector3(x-W/2,y,z-D/2);
+ cam.position.copy(P(345,180,70));
+ let ctr=null;const target=P(55,105,215);cam.lookAt(target);
+ const fine=matchMedia('(pointer:fine)').matches,reduce=matchMedia('(prefers-reduced-motion: reduce)').matches;
+ if(fine&&THREE.OrbitControls){ctr=new THREE.OrbitControls(cam,renderer.domElement);ctr.target.copy(target);ctr.enableZoom=false;ctr.enablePan=false;ctr.enableDamping=true;
+  ctr.minAzimuthAngle=ctr.getAzimuthalAngle()-.55;ctr.maxAzimuthAngle=ctr.getAzimuthalAngle()+.35;ctr.minPolarAngle=.9;ctr.maxPolarAngle=1.55;ctr.update();
+  host.classList.add('drag')}
+ const base=cam.position.clone();
+ const size=()=>{const w=host.clientWidth,h=host.clientHeight;if(!w||!h)return;renderer.setSize(w,h);cam.aspect=w/h;cam.fov=cam.aspect<1.5?70:56;if(innerWidth>1100)cam.setViewOffset(w,h,-w*.2,0,w,h);else cam.clearViewOffset();cam.updateProjectionMatrix()};
+ const ro=new ResizeObserver(size);ro.observe(host);size();
+ let visible=true;const io=new IntersectionObserver(e=>{visible=e[0].isIntersecting});io.observe(host);
+ const clock=new THREE.Clock();
+ (function loop(){requestAnimationFrame(loop);if(!visible)return;const t=clock.getElapsedTime();
+  if(!reduce){const p=sg.attributes.position.array;for(let i=0;i<N;i++){p[i*3+1]-=.35+(i%5)*.06;if(p[i*3+1]<0)p[i*3+1]=320}sg.attributes.position.needsUpdate=true;
+   bulbs.forEach((m,i)=>m.visible=Math.sin(t*2+i*1.7)>-.6);tl1.intensity=1.2+Math.sin(t*1.5)*.2;
+   if(!ctr){cam.position.set(base.x+Math.sin(t*.25)*14,base.y+Math.sin(t*.18)*4,base.z);cam.lookAt(target)}}
+  if(ctr)ctr.update();renderer.render(scene,cam)})();
+ host.classList.add('ready');
+}catch(e){host.remove()}
 }
 </script>
 </body>
